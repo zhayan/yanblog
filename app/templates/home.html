@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Banner -->
+<section id="banner">
+	<div class="content">
+		<header>
+			<h1>Hi, I’m <br />Zha Yan <br /></h1>
+			<p>Welcome to my blog</p>
+		</header>
+		<p>I'm now a student of <a href="https://www.dlut.edu.cn/" target="_blank">Dalian University of Technologe</a>, majored in Network Security. I like programming and reading. I'm working hard to become a professional and powerful network engineer, also a logical and clear thinker. Nice to meet you. </p>
+		<p>This blog is powered by <a href="http://flask.pocoo.org/" target="_blank">Python-Flask</a>. It preserves my learning process and some thoughts, hoping to help you. Also, I use it to record some moments and feelings of life. If you want to know more about me you can click the button below to view my resume, or contact me.</p>
+		<!-- <ul class="actions">
+			<li><a href={{ url_for('resume') }} class="button big">More Detail</a></li>
+		</ul> -->
+	</div>
+	<span class="image object">
+		<img src={{ url_for('static', filename="images/pic10.jpg") }} alt="" />
+	</span>
+</section>
+
+<!-- Section -->
+<section id="posts">
+	<header class="major">
+		<h2>Latest Posts</h2>
+	</header>
+	<div class="posts">
+		{% for post in posts %}
+		{% include '_post.html' %}
+		{% endfor %}
+		<article class="special" style="margin-top: 3em">
+		<ul class="pagination">
+			<li><a class="button 
+				{% if prev_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ prev_url }}#posts">Prev</a></li>
+			<li><a class="button 
+				{% if next_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ next_url }}#posts"">Next</a></li>
+		</ul>
+	</article>
+	</div>
+</section>
+{% endblock %}

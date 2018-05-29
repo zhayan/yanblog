@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<section class="view">
+		{% if article.author=='Zha Yan' %}
+			<p class="posted">Posted by <a href="{{ url_for('author', author=article.author)}}"> {{ article.author }}</a>
+			{% else %} 
+			<p class="posted">Reproduced from <a href="{{ url_for('author', author=article.author)}}"> {{ article.author }}</a>
+			{% endif %}
+			at<span class="date">{{ article.timestamp }}</span> under <a href="{{url_for('category', category=article.category)}}">{{ article.category }}</a></p>
+		{{ article.html_body|safe }}
+	</section>
+	<section id="comments">
+		<h3 style="margin-top: -2.5em">
+			{% if article.comments_num()>1 %}
+			{{ article.comments_num() }} Comments
+			{% else %}
+			{{ article.comments_num() }} Comment
+			{% endif %}
+		</h3>
+		{% for comment in comments %}
+		{% include '_comment.html' %}
+		{% endfor %}
+		<article class="special" style="margin-top: 3em">
+		<ul class="pagination">
+			<li><a class="button 
+				{% if prev_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ prev_url }}">Prev</a></li>
+			<li><a class="button 
+				{% if next_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ next_url }}"">Next</a></li>
+		</ul>
+	</article>
+		</section>
+	<section id="comment">
+		<h3 style="margin-top: -2.5em">Leave a Comment</h3>
+		
+		<form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="row uniform">
+        	<div class="6u 12u$(xsmall)">
+            {{ form.nickname(size=32, placeholder='Name',required='true') }}
+        </div>
+        <div class="6u 12u$(xsmall)">
+        	{% if not form.email.errors %}
+        	{{ form.email(size=32, placeholder='Email',required='true') }}
+        	{% else %}
+        	{{ form.email(size=32, placeholder='Email',required='true',error='true') }}
+        	{% for error in form.email.errors %}
+        <p style="color: red;">
+        	Invalid email address.
+        </p>
+        {% endfor %}
+        	{% endif %}
+        </div>
+    <div class="12u$">
+    	{{ form.comment(rows="5",placeholder='Enter your comment',required='true')}}
+    </div>
+        <p>{{ form.submit() }}</p>
+       
+        </div>
+    </form>
+	</section>
+	{% if form.email.errors %}
+		<script type=text/javascript>
+			 window.location.hash = "#comment";
+		</script>
+	{% endif %}
+{% endblock %}

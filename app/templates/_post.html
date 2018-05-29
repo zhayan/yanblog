@@ -1,0 +1,22 @@
+<article>
+			<a href="#" class="image"><img src="" alt="" /></a>
+			<h3><a href="{{ url_for('article', article_name=post.article_name)}}">{{ post.title }}</a></h3>
+			{% if post.author=='Zha Yan' %}
+			<p class="posted">Posted by <a href="{{ url_for('author', author=post.author)}}"> {{ post.author }}</a>
+			{% else %} 
+			<p class="posted">Reproduced from <a href="{{ url_for('author', author=post.author)}}"> {{ post.author }}</a>
+			{% endif %}
+			 at<span class="date">{{ post.timestamp }}</span> under <a href="{{url_for('category', category=post.category)}}">{{ post.category }}</a></p>
+			<p>{{ post.abstract }}</p>
+			<ul class="actions">
+				<li><a href="{{ url_for('article', article_name=post.article_name)}}" class="button small">More</a></li>
+				<li class="comments">
+					<a href="{{ url_for('article', article_name=post.article_name)}}#comments" class="comments">
+						{% if post.comments_num()>1 %}
+						{{ post.comments_num() }} comments
+						{% else %}
+						{{ post.comments_num() }} comment
+						{% endif %}
+					</a></li>
+				</ul>
+		</article>

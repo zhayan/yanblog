@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<section>
+		<div class="posts">
+		{% for post in posts %}
+		{% include '_post.html' %}
+		{% endfor %}
+		<article class="special" style="margin-top: 3em">
+		<ul class="pagination">
+			<li><a class="button 
+				{% if prev_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ prev_url }}">Prev</a></li>
+			<li><a class="button 
+				{% if next_url==None %}
+				disabled
+				{% endif %}
+				" href="{{ next_url }}"">Next</a></li>
+		</ul>
+	</article>
+	</div>
+	</section>
+{% endblock %}
