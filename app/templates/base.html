@@ -50,11 +50,10 @@
 					</a>
 					{% endif %}
 					<ul class="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-weibo"><span class="label">Weibo</span></a></li>
-						<li><a href="#" class="icon fa-weixin"><span class="label">Weixin</span></a></li>
-						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" id="weibo" target="_blank" class="icon fa-weibo"><span class="label">Weibo</span></a></li>
+						<li><a href="#" id="qq" target="_blank" class="icon fa-qq"><span class="label">QQ</span></a></li>	
+						<li><a href="#" id="weixin" class="icon fa-weixin"><span class="label">Weixin</span></a></li>
+						<li><a href="https://github.com/zhayan/" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
 					</ul>
 				</header>
 				{% block content %}{% endblock %}
@@ -83,10 +82,10 @@
 						<li>
 							<span class="opener">Programming</span>
 							<ul>
-								<li><a href="#">Lorem Dolor</a></li>
-								<li><a href="#">Ipsum Adipiscing</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
+								<li><a href={{url_for('category', category="Web")}}>Web</a></li>
+								<li><a href={{url_for('category', category="Algorithm")}}>Algorithm</a></li>
+								<li><a href={{url_for('category', category="Network")}}>Network</a></li>
+								<li><a href={{url_for('category', category="Others")}}>Others</a></li>
 							</ul>
 						</li>
 						<li>
@@ -94,13 +93,16 @@
 							<ul>
 								<li><a href={{url_for('category', category="English")}}>English</a></li>
 								<li><a href={{url_for('category', category="Network Security")}}>Network Security</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
+								<!-- <li><a href="#">Tempus Magna</a></li>
+								<li><a href="#">Feugiat Veroeros</a></li> -->
 							</ul>
 						</li>
 						<li>
 							<span class="opener">Life</span>
 							<ul>
+								<li><a href={{url_for('category', category="Cup of Tea")}}>Cup of Tea</a></li>
+								<li><a href={{url_for('category', category="Essays")}}>Essays</a></li>
+								<li><a href={{url_for('category', category="Photos")}}>Photos</a></li>
 								<!-- <li><a href="#">Lorem Dolor</a></li>
 								<li><a href="#">Ipsum Adipiscing</a></li>
 								<li><a href="#">Tempus Magna</a></li>
@@ -143,7 +145,7 @@
 					<p>If you like my articles or have questions<br /> comment or contact me </p>
 					<ul class="contact">
 						<li class="fa-envelope-o">zha.y@qq.com</li>
-						<li class="fa-qq">1403751420</li>
+						<li class="fa-qq">2829545510</li>
 						<!-- <li class="fa-home">1234 Somewhere Road #8254<br />
 						Nashville, TN 00000-0000</li> -->
 					</ul>
@@ -166,7 +168,29 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 		<script src={{ url_for('static', filename="assets/js/main.js") }}></script>
 		<script type=text/javascript>
-			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+			var url = window.location.href;
+			var title = {% if title %}"Yan Blog - {{ title }}"
+			{% else %}
+			"Welcome to Yan Blog"
+			{% endif %};
+			{% if title=="article" %}
+			title = title+" - {{ article.title }}"
+			{% endif %}
+			$("#weixin").click(function(){
+				target_url = "http://b.bshare.cn/barCode?site=weixin&url="+url;
+				alert("请扫描二维码完成分享。")
+				share=window.open(target_url,"Share to Wechat",
+					"top=300,left=500,height=400,width=400,scrollbars=no");
+			})
+			$("#weibo").click(function(){
+				target_url = "http://v.t.sina.com.cn/share/share.php?&url="+url+"&title="+title+"&content=gb2312";
+				$(this).attr("href",target_url);
+			})
+			$("#qq").click(function(){
+				target_url = "http://connect.qq.com/widget/shareqq/index.html?url="+url+"&title="+title;
+				$(this).attr("href",target_url);
+			})
+
 		</script>
 	</body>
 	</html>
