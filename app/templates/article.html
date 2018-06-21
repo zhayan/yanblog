@@ -11,7 +11,7 @@
 		{{ article.html_body|safe }}
 	</section>
 	<section id="comments">
-		<h3 style="margin-top: -2.5em">
+		<h3 style="margin-top: -2em">
 			{% if article.comments_num()>1 %}
 			{{ article.comments_num() }} Comments
 			{% else %}
@@ -37,7 +37,7 @@
 	</article>
 		</section>
 	<section id="comment">
-		<h3 style="margin-top: -2.5em">Leave a Comment</h3>
+		<h3 style="margin-top: -2em">Leave a Comment</h3>
 		
 		<form action="" method="post">
         {{ form.hidden_tag() }}
